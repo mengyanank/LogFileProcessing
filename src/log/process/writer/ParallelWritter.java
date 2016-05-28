@@ -3,6 +3,7 @@ package log.process.writer;
 import java.util.ArrayList;
 
 import log.process.LineReader;
+import log.process.NumberWritter;
 import log.process.Termination;
 
 public class ParallelWritter extends Writter{
@@ -23,11 +24,11 @@ public class ParallelWritter extends Writter{
 			{
 				threads.add(new Thread(new LineReader(sourceDir,logFiles,j,i,lineCounts,contents)));
 			}
-			for(int j=i;j<=upper;++j)
+			for(int j=0;j<threads.size();++j)
 			{
-				threads.get(j).run();
+				threads.get(j).start();
 			}
-			for(int k=i;k<=upper;++k)
+			for(int k=0;k<threads.size();++k)
 			{
 				try {
 					threads.get(k).join();
@@ -37,21 +38,34 @@ public class ParallelWritter extends Writter{
 				}
 			}
 			//long accu=base;
-			for(long a:lineCounts)
-				System.out.println(a);
+			/*for(long a:lineCounts)
+				System.out.println(a);*/
 			for(int j=0;j<lineCounts.length;++j)
 			{
 				long temp = lineCounts[j];
 				lineCounts[j]=base;
 				base+=temp;
 			}
-			for(long a:lineCounts)
-				System.out.println(a);
+			/*for(long a:lineCounts)
+				System.out.println(a);*/
 			
 			threads.clear();
 			for(int j=i;j<=upper;++j)
 			{
-				
+				threads.add(new Thread(new NumberWritter(distDir,logFiles,j,i,lineCounts,contents)));
+			}
+			for(int j=0;j<threads.size();++j)
+			{
+				threads.get(j).start();
+			}
+			for(int k=0;k<threads.size();++k)
+			{
+				try {
+					threads.get(k).join();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					Termination.terminate(e.getMessage(), -1);
+				}
 			}
 		}
 	}

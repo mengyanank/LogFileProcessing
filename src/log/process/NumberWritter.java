@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
-public class NumberWritter {
+public class NumberWritter implements Runnable{
 
 	private int fileIndex;
 	private int baseIndex;
@@ -26,7 +26,7 @@ public class NumberWritter {
 		this.contents=contents;
 	}
 	public void run(){
-		String path="distDir";
+		String path=distDir;
 		File fout = new File(path+"\\"+logFiles.get(fileIndex));
 		FileOutputStream fos = null;
 		try {
@@ -38,9 +38,12 @@ public class NumberWritter {
 	 
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 		try{
+			long number=lineCounts[fileIndex-baseIndex];
 			for (int i = 0; i < contents[fileIndex-baseIndex].size(); i++) {
-				bw.write(contents[fileIndex-baseIndex].get(i));
+				String str= number+". "+contents[fileIndex-baseIndex].get(i);
+				bw.write(str);
 				bw.newLine();
+				++number;
 			}
 			bw.close();
 		}
@@ -49,4 +52,4 @@ public class NumberWritter {
 			e.printStackTrace();
 		}
 	}
-}
+}  
