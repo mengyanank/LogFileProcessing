@@ -26,18 +26,10 @@ public class NumberWritter implements Runnable{
 		this.contents=contents;
 	}
 	public void run(){
-		String path=distDir;
-		File fout = new File(path+"\\"+logFiles.get(fileIndex));
-		FileOutputStream fos = null;
-		try {
-			fos = new FileOutputStream(fout);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	 
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 		try{
+			File fout = new File(distDir+"\\"+logFiles.get(fileIndex));
+			FileOutputStream fos = new FileOutputStream(fout);
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 			long number=lineCounts[fileIndex-baseIndex];
 			for (int i = 0; i < contents[fileIndex-baseIndex].size(); i++) {
 				String str= number+". "+contents[fileIndex-baseIndex].get(i);
@@ -47,9 +39,14 @@ public class NumberWritter implements Runnable{
 			}
 			bw.close();
 		}
+		catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			Termination.terminate(e.getMessage(),-1);
+		}
 		catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Termination.terminate(e.getMessage(),-1);
 		}
+		
 	}
 }  

@@ -2,6 +2,7 @@ package log.process;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 
 import log.process.writer.Writter;
 import log.process.writer.WritterFactory;
@@ -13,6 +14,18 @@ public class LogProcess {
 	private String distDir;
 	private int threads;
 	boolean parallel;
+	
+	public ArrayList<String> getLogFiles(){
+		return this.logFiles;
+	}
+	
+	public String getSourceDir(){
+		return this.sourceDir;
+	}
+	
+	public String getDistDir(){
+		return this.distDir;
+	}
 	
 	public LogProcess(String []args){
 		logFiles=new ArrayList<String>();
@@ -29,8 +42,14 @@ public class LogProcess {
 			Termination.terminate("no files to process",0);
 		if(threads==1)
 			parallel=false;
-		Writter writter=WritterFactory.getWritter(parallel);
+		Writter writter=WritterFactory.getWritter(parallel,threads);
+		long lStartTime = new Date().getTime();
 		writter.write(sourceDir,distDir,logFiles,threads);
+		long lEndTime = new Date().getTime(); // end time
+
+		long difference = lEndTime - lStartTime; // check different
+
+		System.out.println("Elapsed milliseconds: " + difference);
 	}
 	
 	private void addLogFiles(ArrayList<String> logFiles,String source){
@@ -38,7 +57,7 @@ public class LogProcess {
 		for (final File fileEntry : folder.listFiles()) {
 	        if (!fileEntry.isDirectory()) 
 	        {
-	        	System.out.println(fileEntry.getName());
+	        	//System.out.println(fileEntry.getName());
 	        	logFiles.add(fileEntry.getName());
 	        }
 	    }

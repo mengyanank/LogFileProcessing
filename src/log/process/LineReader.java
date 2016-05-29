@@ -26,25 +26,24 @@ public class LineReader implements Runnable{
 	}
 	
 	public void run(){
-		int count=0;
-		System.out.println(fileIndex+": "+baseIndex);
+		
+		int count=0;	
 		try{
-		String fileName = sourceDir+"\\"+logFiles.get(fileIndex);
-		FileReader fileReader = null;
-		fileReader = new FileReader(fileName);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String line;
-		while((line = bufferedReader.readLine()) != null) {
-			    
+			String fileName = sourceDir+"\\"+logFiles.get(fileIndex);
+			FileReader fileReader = null;
+			fileReader = new FileReader(fileName);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			String line;
+			while((line = bufferedReader.readLine()) != null) {		    
 				contents[fileIndex-baseIndex].add(line);
 			    ++count;
 			} 
 		}
 		 catch(FileNotFoundException ex) {
-			 Termination.terminate("file not found", -1);
+			 Termination.terminate(ex.getMessage(),-1);
 	     }
 	     catch(IOException ex) {
-	    	 Termination.terminate("Error reading file", -1);
+	    	 Termination.terminate(ex.getMessage(),-1);
 	     }
 		lineCounts[fileIndex-baseIndex]=count;
 	}
