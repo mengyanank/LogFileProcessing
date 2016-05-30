@@ -41,8 +41,10 @@ public class ParallelWritter extends Writter{
      * The third step: Write the line number and file contents into the output files.
      * Each thread is responsible for one file, like the first step
      * 
-     * @param parallel: boolean, create a parallel writter subclass if true
-     * @param threads: int, number of threads when parallel version is created
+     * @param sourceDir: String, read directory
+     * @param distDir: String, write directory
+     * @param logFiles: ArrayList<String>, list of log files
+     * @param threadCount: int, number of threads when parallel version is created
      */
 	@Override
 	public void write(String sourceDir, String distDir, ArrayList<String> logFiles, int threadCount) {
@@ -115,7 +117,7 @@ public class ParallelWritter extends Writter{
 	
 	 private long calPrefix(long base, long []lineCounts){
 		  /*
-		   * the return value is the start line number of the file
+		   * the returned value is the start line number of the file
 		   * to be processed in the next loop
 		  */
 		 for(int j=0;j<lineCounts.length;++j)

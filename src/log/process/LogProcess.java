@@ -70,7 +70,7 @@ public class LogProcess {
 		writter.write(sourceDir,distDir,logFiles,threads);
 	}
 	
-	//find all the files in the input folder, and store the file names in memory
+	//this function find all the files in the input folder, and store the file names in memory
 	private void addLogFiles(ArrayList<String> logFiles,String source){
 		final File folder=new File(source);
 		for (final File fileEntry : folder.listFiles()) {
@@ -82,7 +82,7 @@ public class LogProcess {
 	    }
 	}
 	
-	// validate the input folder, ouput folder and thread number
+	// this function validates the input folder, ouput folder and thread number
 	private void validateArgs(String s,String d,int n){
 		if(n<1){
 			String error="number of threads is less than 1";

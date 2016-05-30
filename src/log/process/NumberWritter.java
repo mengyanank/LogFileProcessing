@@ -37,7 +37,7 @@ public class NumberWritter implements Runnable{
      * by all threads. but each thread has its one index parameter which leads it to a corresponding
      * file. Therefore, the threads are working independently, and writing different files.
      *
-     * @param sourceDir: String, write directory
+     * @param distDir: String, write directory
      * @param logFiles: ArrayList<String>, list of log files
      * @param index: int, the file index in "logFiles"
      * @param baseIndex: int, the index of the first file in current loop

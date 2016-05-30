@@ -6,7 +6,7 @@ package log.process.writer;
 public class WritterFactory {
 
 	/**
-     * This function creates the correct writter subclass.
+     * This function creates the corresponding writter subclass.
      * 
      * @param parallel: boolean, create a parallel writter subclass if true
      * @param threads: int, number of threads when parallel version is created
