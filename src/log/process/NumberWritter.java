@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
+/*----------------------------------------------------------------
+ *  Author: Yan Meng
+ *----------------------------------------------------------------*/
 public class NumberWritter implements Runnable{
 
 	// the file index in "logFiles"

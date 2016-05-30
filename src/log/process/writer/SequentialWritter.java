@@ -10,12 +10,15 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
+/*----------------------------------------------------------------
+ *  Author: Yan Meng
+ *----------------------------------------------------------------*/
 public class SequentialWritter extends Writter{
 	@Override
 	public void write(String sourceDir, String distDir, ArrayList<String> logFiles, int threads) 
 	{
 		// TODO Auto-generated method stub
-		//int lineCount = 1;
+		
 		try{
 			int count=1;
 	        for (final String file : logFiles) {

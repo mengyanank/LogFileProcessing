@@ -2,6 +2,9 @@ package log.process.writer;
 
 import java.util.ArrayList;
 
+/*----------------------------------------------------------------
+ *  Author: Yan Meng
+ *----------------------------------------------------------------*/
 public abstract class Writter {
 
 	/**
