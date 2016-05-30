@@ -14,6 +14,8 @@ The goal is to implement it in parallel fashion.
 ### Command line arguments
 The user is expected to configure three command line arguments when running the program. They are the input directory, output
 directory, and the number of threads.
+The example command line arguments is:
+D:\logs\files D:\log_output 3
 
 ### Sequential
 The sequential method is provided in the program to provide the user a complete solution. If the number of threads configured by the user happens to be
