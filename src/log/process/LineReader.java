@@ -8,13 +8,37 @@ import java.util.ArrayList;
 
 public class LineReader implements Runnable{
 
+	// the file index in "logFiles"
 	private int fileIndex;
+	
+	// the index of the first file in current loop
 	private int baseIndex;
+	
+	// read directory
 	private String sourceDir;
+	
+	// list of log files
 	private ArrayList<String> logFiles;
+	
+	// array of line counts
 	long []lineCounts;
+	
+	// array of file contents
 	ArrayList<String> []contents;
 	
+	/**
+     * Each thread will get an instance of this class. 
+     * The log files, and the memory which stores number of lines and file contents are shared
+     * by all threads. but each thread has its one index parameter which leads it to a corresponding
+     * file. Therefore, the threads are working independently and reading different files.
+     *
+     * @param sourceDir: String, read directory
+     * @param logFiles: ArrayList<String>, list of log files
+     * @param index: int, the file index in "logFiles"
+     * @param baseIndex: int, the index of the first file in current loop
+     * @param lineCounts: long [], array of line counts
+     * @param contents: ArrayList<String> [], array of file contents
+     */
 	public LineReader(String sourceDir, ArrayList<String> logFiles, int index, int baseIndex, long []lineCounts, ArrayList<String> []contents)
 	{
 		this.sourceDir=sourceDir;
@@ -25,6 +49,12 @@ public class LineReader implements Runnable{
 		this.contents=contents;
 	}
 	
+	/**
+     * When an object implementing interface <code>Runnable</code> is used
+     * to create a thread, starting that thread causes the object's
+     * <code>run</code> method to be called in that separately executing
+     * thread.
+     */
 	public void run(){
 		
 		int count=0;	

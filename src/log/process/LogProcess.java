@@ -2,17 +2,35 @@ package log.process;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 
 import log.process.writer.Writter;
 import log.process.writer.WritterFactory;
 
+/*----------------------------------------------------------------
+ *  Author: Yan Meng
+ *----------------------------------------------------------------*/
+
 public class LogProcess {
 
-	private ArrayList<String> logFiles;
+	/*-----------------------------------------
+	*this class parses the arguments, 
+	*create the object which process the logs,
+	*and run the file processing procedure
+	*--------------------------------------------------*/
+	
+	//a list which stores all the log file names
+	private ArrayList<String> logFiles; 
+	
+	//the input folder which contains all the log files
 	private String sourceDir;
+	
+	//the output folder where the output files are written
 	private String distDir;
+	
+	// number of threads
 	private int threads;
+	
+	// whether to use the parallel solution
 	boolean parallel;
 	
 	public ArrayList<String> getLogFiles(){
@@ -38,20 +56,21 @@ public class LogProcess {
 	public void excute(){
 		validateArgs(sourceDir,distDir,threads);
 		addLogFiles(logFiles,sourceDir);
+		
 		if(logFiles.size()<1)
 			Termination.terminate("no files to process",0);
+		
+		/* if the user configures one thread, it means
+		 the sequential solution is used */
 		if(threads==1)
 			parallel=false;
+		
 		Writter writter=WritterFactory.getWritter(parallel,threads);
-		long lStartTime = new Date().getTime();
+		
 		writter.write(sourceDir,distDir,logFiles,threads);
-		long lEndTime = new Date().getTime(); // end time
-
-		long difference = lEndTime - lStartTime; // check different
-
-		System.out.println("Elapsed milliseconds: " + difference);
 	}
 	
+	//find all the files in the input folder, and store the file names in memory
 	private void addLogFiles(ArrayList<String> logFiles,String source){
 		final File folder=new File(source);
 		for (final File fileEntry : folder.listFiles()) {
@@ -63,6 +82,7 @@ public class LogProcess {
 	    }
 	}
 	
+	// validate the input folder, ouput folder and thread number
 	private void validateArgs(String s,String d,int n){
 		if(n<1){
 			String error="number of threads is less than 1";
